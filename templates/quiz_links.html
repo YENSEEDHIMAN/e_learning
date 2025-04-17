@@ -1,0 +1,13 @@
+<!-- templates/quizzes/quiz_links.html -->
+<h1>Select Your Quiz</h1>
+<ul>
+  {% for course in courses %}
+    {% for level in levels %}
+      <li>
+        <a href="{% url 'start_quiz' course=course level=level %}">
+          {{ course|capfirst }} - {{ level|capfirst }}
+        </a>
+      </li>
+    {% endfor %}
+  {% endfor %}
+</ul>

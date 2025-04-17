@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificate of Completion</title>
+  <style>
+    /* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f3f4f6;
+  min-height: 100vh;
+  padding: 0;
+}
+
+    /* Navbar */
+    .navbar {
+      background-color: #0056D2;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+    
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    
+    .navbar button {
+      background-color: white;
+      color: #0056D2;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .navbar button:hover {
+      background-color: #e8f5e9;
+    }
+    
+    .logout-button {
+      display: inline-block;
+      background: #f44336;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    
+    .logout-button:hover {
+      background: #e53935;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .container h1 {
+      color: #0047AB;
+    }
+
+    .container p {
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+
+    .certificate-image {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #0056D2;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #0047AB;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/courses/">Courses</a>
+      <a href="/quizzes/">Quizzes</a>
+      <a href="/profile/">Profile</a>
+      <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container">
+    <h1>Certificate of Completion</h1>
+    <p>
+      After successfully completing a course and passing the quizzes, you’ll receive an official Certificate of Completion. This certificate is a testament to your dedication and knowledge.
+    </p>
+
+    <p>
+      Use it to enhance your resume, LinkedIn profile, or just feel proud of your achievement!
+    </p>
+
+    <img src="{% static 'images/certificate-with-ribbon-bow-books_23-2148769681.avif' %}" alt="Sample Certificate" class="certificate-image">
+    <p>
+      Once you complete a quiz with a good score, a certificate of completion is generated automatically. You can download and share it with your network or include it in your resume!
+    </p>
+
+    <a href="/courses/" class="btn">Go to Courses</a>
+  </div>
+  </div>
+</body>
+</html>

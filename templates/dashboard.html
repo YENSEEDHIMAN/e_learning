@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/courses/">Courses</a>
+      <a href="/quizzes/">Quizzes</a>
+      <a href="/profile/">Profile</a>
+      <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
+  </div>
+  
+  <!-- Dashboard Content -->
+  <div class="main-container">
+    <div class="dashboard-container">
+
+      <div class="cards">
+        <div class="card">
+          <a href="/courses/">
+            <div class="card-icon">
+              <img src="{% static 'images/Online-courses.jpg' %}" alt="Courses">
+            </div>
+            <h3>Courses</h3>
+            <p>Browse and enroll in available courses.</p>
+          </a>
+        </div>
+
+        <div class="card">
+          <a href="/quizzes/">
+            <div class="card-icon">
+              <img src="{% static 'images/Guide-to-Using-Quizzes-in-the-Classroom.jpg' %}" alt="Quizzes">
+            </div>
+            <h3>Quizzes</h3>
+            <p>Attempt quizzes and review your performance.</p>
+          </a>
+        </div>
+
+        <div class="card">
+          <a href="/certificate/">
+            <div class="card-icon">
+              <img src="{% static 'images/CourseraCertificate.png' %}" alt="Certificates">
+            </div>
+            <h3>Certificates</h3>
+            <p>Access and download your course certificates.</p>
+          </a>
+        </div>
+
+        <div class="card">
+          <a href="/leaderboard/">
+            <div class="card-icon">
+              <img src="{% static 'images/0f7f10e3b7c240fce8149d6df587b300_t copy.jpeg' %}" alt="Leaderboard">
+            </div>
+            <h3>Leaderboard</h3>
+            <p>Track your performance among other learners.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Chatbot UI -->
+<div class="chatbot-container" style="display: none;">
+  <div class="chatbot-box">
+    <div class="chatbot-header">
+      <h4>SkillEdge Chatbot</h4>
+    </div>
+    <div class="chatbot-body">
+      <div class="chatbot-messages" id="chatbot-messages">
+        <!-- Initial Greeting -->
+        <div class="bot-message">Welcome! How can I assist you today?</div>
+        <div class="bot-options">
+          <button class="option-btn">Ask about courses</button>
+          <button class="option-btn">Ask about quizzes</button>
+          <button class="option-btn">Ask about certificates</button>
+          <button class="option-btn">Ask about leaderboard</button> 
+        </div>
+      </div>
+    </div>
+    <div class="chatbot-footer">
+      <input type="text" id="user-input" placeholder="Ask me anything...">
+      <button id="send-message">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- Chatbot Icon (Button) -->
+<div id="chatbot-icon" style="display: block;">
+  <img src="{% static 'images/images.png' %}" alt="Chatbot" width="50">
+</div>
+
+<!-- JS Script -->
+<script>
+  $(document).ready(function () {
+    function appendMessage(content, sender = 'bot') {
+      let messageClass = sender === 'user' ? 'user-message' : 'bot-message';
+      $('#chatbot-messages').append(`<div class="${messageClass}">${content}</div>`);
+    }
+
+    function appendOptions(options) {
+      let optionHTML = '<div class="bot-options">';
+      options.forEach(opt => {
+        optionHTML += `<button class="option-btn">${opt}</button>`;
+      });
+      optionHTML += '</div>';
+      $('#chatbot-messages').append(optionHTML);
+    }
+
+    function sendMessage(message) {
+      appendMessage(message, 'user');
+      $('#user-input').val('');
+
+      $.ajax({
+        url: '/chatbot/',
+        type: 'POST',
+        data: JSON.stringify({ input: message }),
+        contentType: 'application/json',
+        success: function (response) {
+          appendMessage(response.answer, 'bot');
+          if (response.options) {
+            appendOptions(response.options);
+          }
+          $('#chatbot-messages').scrollTop($('#chatbot-messages')[0].scrollHeight);
+        },
+        error: function () {
+          appendMessage("Sorry, something went wrong. Please try again.", 'bot');
+        }
+      });
+    }
+
+    // Handle send button
+    $('#send-message').click(function () {
+      const message = $('#user-input').val();
+      if (message.trim() !== '') {
+        sendMessage(message);
+      }
+    });
+
+    // Handle Enter key
+    $('#user-input').keypress(function (event) {
+      if (event.which == 13) {
+        const message = $('#user-input').val();
+        if (message.trim() !== '') {
+          sendMessage(message);
+        }
+      }
+    });
+
+    // Handle option button click
+    $(document).on('click', '.option-btn', function () {
+      const message = $(this).text();
+      sendMessage(message);
+    });
+
+  
+    $('#chatbot-icon').click(function () {
+      $('.chatbot-container').toggle();
+      $(this).hide(); 
+    });
+
+    // Toggle between icon and chatbot
+    $('.chatbot-header').click(function () {
+      if ($('.chatbot-container').is(":visible")) {
+        $('#chatbot-icon').show(); 
+        $('.chatbot-container').hide(); 
+      } else {
+        $('#chatbot-icon').hide(); 
+        $('.chatbot-container').show(); 
+      }
+    });
+  });
+</script>
+
+<!-- Styles -->
+<style>
+  .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      width: 320px;
+      border-radius: 10px;
+      display: none;
+  }
+
+  .chatbot-box {
+      display: flex;
+      flex-direction: column;
+      height: 400px;
+  }
+
+  .chatbot-header {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 10px 10px 0 0;
+      font-size: 16px;
+  }
+
+  .chatbot-body {
+      padding: 15px;
+      overflow-y: auto;
+      flex-grow: 1;
+      max-height: 280px;
+  }
+
+  .chatbot-footer {
+      display: flex;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 0 0 10px 10px;
+  }
+
+  .chatbot-footer input {
+      flex-grow: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+  }
+
+  .chatbot-footer button {
+      margin-left: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+  }
+
+  .chatbot-footer button:hover {
+      background-color: #0056b3;
+  }
+
+  .user-message {
+      text-align: right;
+      background-color: #e0e0e0;
+      padding: 8px 12px;
+      border-radius: 15px;
+      margin: 5px 0;
+      font-size: 14px;
+  }
+
+  .bot-message {
+      text-align: left;
+      background-color: #f1f1f1;
+      padding: 8px 12px;
+      border-radius: 15px;
+      margin: 5px 0;
+      font-size: 14px;
+  }
+
+  .bot-options {
+      margin-top: 10px;
+  }
+
+  .option-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+  }
+
+  .option-btn:hover {
+      background-color: #0056b3;
+  }
+
+  #chatbot-icon {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1000;
+    background-color: #007bff;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #chatbot-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  #chatbot-icon img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+  }
+</style>
+
+</body>
+</html>

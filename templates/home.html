@@ -1,0 +1,363 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - SkillEdge Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f3f4f6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes zoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeInUp 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .animate-slide-left {
+      animation: slideInFromLeft 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .animate-slide-right {
+      animation: slideInFromRight 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    .animate-zoom {
+      animation: zoomIn 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #0056D2;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .navbar button {
+      background-color: white;
+      color: #0056D2;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s ease-in-out;
+    }
+
+    .navbar button:hover {
+      background-color: #e8f5e9;
+      transform: scale(1.1);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background-image: url("{% static 'images/image.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+      position: relative;
+      animation: parallax 10s infinite linear;
+    }
+
+    /* Parallax effect */
+    @keyframes parallax {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 50%;
+      }
+    }
+
+    .hero-section h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+      animation: slideInFromLeft 1s ease-out forwards;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-align: center;
+      animation: slideInFromRight 1s ease-out forwards;
+    }
+
+    /* Main Content */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: 60px auto;
+      width: 100%;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .main-container h2 {
+      color: #0056D2;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .main-container p {
+      font-size: 1.3rem;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      max-width: 750px;
+    }
+
+    .cta-button {
+      padding: 14px 36px;
+      background-color: #0056D2;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s ease-in-out;
+    }
+
+    .cta-button:hover {
+      background-color: #003e8e;
+      transform: scale(1.1);
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      background-color: #ffffff;
+      padding: 30px 20px;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      margin-bottom: 20px;
+      animation: zoomIn 1s ease-out forwards;
+    }
+
+    .benefits-section h3 {
+      color: #0056D2;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .benefits-section p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      max-width: 750px;
+    }
+
+    .benefits-section img {
+      width: 60%;
+      max-width: 600px;
+      height: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .benefits-section img:hover {
+      transform: scale(1.05);
+    }
+
+    /* What Makes Us the Best */
+    .best-section {
+      background-color: #f4f7fb;
+      padding: 30px 20px;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .best-section h3 {
+      color: #0056D2;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .best-section p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      max-width: 750px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar h1 {
+        font-size: 1.5em;
+      }
+
+      .hero-section h2 {
+        font-size: 2.5rem;
+      }
+
+      .main-container h2 {
+        font-size: 2.5rem;
+      }
+
+      .cta-button {
+        font-size: 1.1rem;
+        padding: 12px 32px;
+      }
+
+      .benefits-section img {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'about_us' %}">About</a>
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">SignUp</a>
+      <a href="/admin/login/">Admin Login</a> 
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div>
+      <h2>Master New Skills with SkillEdge Academy</h2>
+      <p>Join us and start learning in-demand tech skills today!</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <h2>Welcome to SkillEdge Academy</h2>
+    <p>Your journey to mastering tech skills starts here! Explore our courses, quizzes, and more to enhance your programming knowledge.</p>
+    <a href="/signup/" class="cta-button">Start Learning Now</a>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="benefits-section">
+    <h3>Why SkillEdge Academy?</h3>
+    <p>At SkillEdge Academy, we believe in hands-on learning that makes a difference. Our courses are designed to equip you with practical skills that you can use immediately in the tech industry.</p>
+    <img src="{% static 'images/iStock-542962398.jpg' %}" alt="Learning Benefits">
+
+    <h3>Benefits of Quizzes</h3>
+    <p>Quizzes are a powerful tool for reinforcing knowledge. They help you track your progress, identify areas for improvement, and boost retention by testing what you've learned. Plus, they make learning more engaging and interactive!</p>
+    <img src="{% static 'images/istockphoto-1443546208-612x612.jpg' %}" alt="Quiz Benefits">
+  </div>
+
+  <!-- What Makes Us the Best -->
+  <div class="best-section">
+    <h3>What Makes Us the Best?</h3>
+    <p>We offer a unique blend of expert-led courses, interactive quizzes, and a supportive learning community. Whether you're a beginner or an advanced learner, SkillEdge Academy ensures a personalized learning experience tailored to your needs.</p>
+  </div>
+
+</body>
+</html>

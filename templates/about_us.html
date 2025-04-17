@@ -1,0 +1,315 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - SkillEdge Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f3f4f6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+
+    /* Navbar */
+    .navbar {
+      background-color: #0056D2;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .navbar button {
+      background-color: white;
+      color: #0056D2;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s ease-in-out;
+    }
+
+    .navbar button:hover {
+      background-color: #e8f5e9;
+      transform: scale(1.1);
+    }
+
+    /* Main Content */
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 30px 20px;
+    }
+
+    /* About Section */
+    .about-container {
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 1000px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .about-container h2 {
+      color: #0056D2;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .about-container p {
+      color: #555;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    /* Mission Section */
+    .mission-section {
+      background-color: #e3f2fd;
+      padding: 30px 25px;
+      border-radius: 10px;
+      margin-top: 30px;
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .mission-section h3 {
+      font-size: 2rem;
+      color: #0056D2;
+      margin-bottom: 15px;
+    }
+
+    .mission-section p {
+      color: #444;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background-color: #f3f4f6;
+      padding: 30px 25px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 1000px;
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .contact-section h3 {
+      font-size: 2rem;
+      color: #0056D2;
+      margin-bottom: 15px;
+    }
+
+    .contact-section p {
+      color: #444;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    /* Team Section */
+    .team-section {
+      margin-top: 30px;
+      background-color: #ffffff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    .team-section h3 {
+      font-size: 2.5rem;
+      color: #0056D2;
+      margin-bottom: 25px;
+      font-weight: bold;
+    }
+
+    /* Team Members Grid */
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      padding: 10px;
+      margin-top: 30px;
+    }
+
+    .team-member {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+
+    .team-member h4 {
+      font-size: 1.5rem;
+      color: #0056D2;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .team-member p {
+      color: #777;
+      font-size: 1.1rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 800px) {
+      .navbar h1 {
+        font-size: 1.6em;
+      }
+
+      .about-container,
+      .mission-section,
+      .contact-section,
+      .team-section {
+        padding: 25px;
+      }
+
+      .team-members {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar h1 {
+        font-size: 1.5em;
+      }
+
+      .hero-section h2 {
+        font-size: 2.5rem;
+      }
+
+      .main-container h2 {
+        font-size: 2.5rem;
+      }
+
+      .cta-button {
+        font-size: 1.1rem;
+        padding: 12px 32px;
+      }
+
+      .benefits-section img {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'about_us' %}">About</a>
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">SignUp</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="about-container">
+      <h2>About Us</h2>
+      <p>At SkillEdge Academy, we are passionate about empowering learners with the skills needed to excel in the tech world. Our platform offers a variety of programming courses designed for all skill levels—whether you're just starting or looking to sharpen your expertise. Our mission is to provide a supportive environment for students to learn, grow, and succeed in technology.</p>
+    </div>
+
+    <div class="mission-section">
+      <h3>Our Mission</h3>
+      <p>To bridge the skill gap in tech by providing high-quality, accessible online education. We make learning engaging, practical, and accessible, helping students land their dream job or elevate their current skills.</p>
+    </div>
+
+    <div class="contact-section">
+      <h3>Contact Us</h3>
+      <p>If you have any questions or need support, feel free to contact us:</p>
+      <p>Email: support@skilledgeacademy.in</p>
+      <p>Phone: +91 123 456 7890</p>
+    </div>
+
+    <div class="team-section">
+      <h3>Meet Our Team</h3>
+      <div class="team-members">
+        <!-- Team Member 1 -->
+        <div class="team-member">
+          <img src="{% static 'images/young-man.avif' %}" alt="Arun Patel">
+          <h4>Arun Patel</h4>
+          <p>Founder & CEO</p>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-member">
+          <img src="{% static 'images/girl.jpg' %}" alt="Priya Reddy">
+          <h4>Priya Reddy</h4>
+          <p>Lead Instructor</p>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-member">
+          <img src="{% static 'images/amit.avif' %}" alt="Amit Kumar">
+          <h4>Amit Kumar</h4>
+          <p>Content Manager</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

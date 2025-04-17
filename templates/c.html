@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>C Programming Course</title>
+  <style>
+    /* Global Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Body */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+      padding: 0;
+    }
+    
+    .navbar {
+      background-color: #0056D2;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .logout-button {
+      background: #f44336;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background: #e53935;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .content h2 {
+      text-align: center;
+      color: #0047AB;
+    }
+
+    .content img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 20px auto;
+      border-radius: 8px;
+    }
+
+    .content p {
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .level-box {
+      background-color: #e9f2ff;
+      border-left: 5px solid #0047AB;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .toggle-btn {
+      background-color: #0047AB;
+      color: white;
+      padding: 8px 16px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .toggle-btn:hover {
+      background-color: #00338c;
+    }
+
+    .quiz-link {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin: 10px 10px 0 0;
+    }
+
+    .quiz-link.beginner {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .quiz-link.intermediate {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    .quiz-link.advanced {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    .quiz-link:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar div {
+        margin-top: 10px;
+      }
+
+      .content {
+        padding: 20px;
+        margin: 15px;
+      }
+
+      .toggle-btn, .quiz-link {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/courses/">Courses</a>
+      <a href="/quizzes/">Quizzes</a>
+      <a href="/profile/">Profile</a>
+      <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
+  </div>
+
+  <!-- Course Content -->
+  <div class="content">
+    <h2>C Programming Course</h2>
+    <img src="{% static 'images/1679804058550.jpeg' %}" alt="C Programming Course Image">
+
+    <p>
+      Dive into the world of programming with our <strong>C Programming course</strong>. C is a powerful, high-performance language that forms the foundation of many modern systems and programming languages.
+    </p>
+
+    <p>
+      The course is organized into three levels to accommodate learners from different backgrounds and experience levels.
+    </p>
+
+    <!-- Toggle Buttons and Sections -->
+    <button class="toggle-btn" onclick="toggleSection('level1')">Toggle Beginner</button>
+    <div id="level1" class="level-box">
+      <h3>Beginner</h3>
+      <p>
+        Introduces students to basic programming concepts like <strong>variables, data types, and simple I/O</strong> using the C language.
+      </p>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('level2')">Toggle Intermediate</button>
+    <div id="level2" class="level-box">
+      <h3>Intermediate</h3>
+      <p>
+        Covers topics such as <strong>loops, conditional statements, functions, and arrays</strong> to build stronger programming logic.
+      </p>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('level3')">Toggle Advanced</button>
+    <div id="level3" class="level-box">
+      <h3>Advanced</h3>
+      <p>
+        Explores advanced concepts like <strong>pointers, structures, file handling, and memory management</strong> with real-world examples.
+      </p>
+    </div>
+
+    <p>
+      Whether you're starting fresh or looking to enhance your knowledge, this course will give you a solid understanding of core programming principles using C.
+    </p>
+
+    <!-- Quiz Toggle Button -->
+    <button class="toggle-btn" onclick="toggleQuiz()">Start C Quiz</button>
+
+    <!-- Difficulty Quiz Options -->
+    <div id="quiz-difficulty" class="level-box">
+      <h3>Choose Difficulty Level</h3>
+      <a href="/quizzes/c/start/easy/" class="quiz-link beginner">Beginner</a>
+      <a href="/quizzes/c/start/intermediate/" class="quiz-link intermediate">Intermediate</a>
+      <a href="/quizzes/c/start/advanced/" class="quiz-link advanced">Advanced</a>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleSection(id) {
+      const section = document.getElementById(id);
+      section.style.display = section.style.display === "none" ? "block" : "none";
+    }
+
+    function toggleQuiz() {
+      const quizBox = document.getElementById('quiz-difficulty');
+      quizBox.style.display = quizBox.style.display === "none" ? "block" : "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      ["level1", "level2", "level3", "quiz-difficulty"].forEach(id => {
+        document.getElementById(id).style.display = "none";
+      });
+    });
+  </script>
+
+</body>
+</html>

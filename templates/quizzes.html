@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quizzes Introduction</title>
+  <style>
+    /* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f3f4f6;
+  min-height: 100vh;
+  padding: 0;
+}
+
+    /* Navbar */
+    .navbar {
+      background-color: #0056D2;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+    
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    
+    .navbar button {
+      background-color: white;
+      color: #0056D2;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .navbar button:hover {
+      background-color: #e8f5e9;
+    }
+    
+    .logout-button {
+      display: inline-block;
+      background: #f44336;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    
+    .logout-button:hover {
+      background: #e53935;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #0047AB;
+    }
+
+    img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    p {
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #0056D2;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #0047AB;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .container {
+        padding: 20px;
+        margin: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/courses/">Courses</a>
+      <a href="/quizzes/">Quizzes</a>
+      <a href="/profile/">Profile</a>
+      <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
+  </div>
+
+  <!-- Quiz Introduction -->
+  <div class="container">
+    <h2>Welcome to the Quiz Section</h2>
+    <img src="{% static 'images/depositphotos_116672996-stock-illustration-python-word-cloud-tag-cloud.jpg' %}" alt="Quiz Image">
+
+    <p>
+      Our quiz section is designed to test your knowledge and help reinforce your learning. Each course has its own quiz, tailored to match the topics and difficulty levels you’ve studied.
+    </p>
+
+    <p>
+      Quizzes are a great way to practice, learn, and even earn certificates! They include multiple choice questions based on your selected course.
+    </p>
+
+    <h3>How to Start a Quiz</h3>  <br>
+    <ul>
+      <li>Go to the <a href="/courses/">Courses</a> page and select your preferred course.</li>
+      <li>Click on the “Start Quiz” button available in the course description.</li>
+      <li>Each quiz consists of 10–15 questions and is time-limited.</li>
+    </ul>
+    <br>
+    <h3>Difficulty Levels</h3>  <br>
+    <ul>
+      <li><strong>Beginner:</strong> Basic questions to test foundational understanding.</li>
+      <li><strong>Intermediate:</strong> More detailed logic and practical problem-solving.</li>
+      <li><strong>Advanced:</strong> Real-world application-based and challenging problems.</li>
+    </ul>
+    <br>
+    <h3>Certificate</h3>
+    <p>
+      Once you complete a quiz with a good score, a certificate of completion is generated automatically. You can download and share it with your network or include it in your resume!
+    </p>
+
+    <a href="/courses/" class="btn">Go to Courses</a>
+  </div>
+
+</body>
+</html>

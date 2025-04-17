@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Enrolled Course</title>
+  <style>
+    table {
+      width: 60%;
+      margin: 50px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 12px;
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>My Enrolled Course</h2>
+
+  {% if student.enrolled_course %}
+    <table>
+      <tr>
+        <th>Student Name</th>
+        <th>Enrolled Course</th>
+      </tr>
+      <tr>
+        <td>{{ student.name }}</td>
+        <td>{{ student.enrolled_course.name }}</td>
+      </tr>
+    </table>
+  {% else %}
+    <p style="text-align:center;">You have not enrolled in any course yet.</p>
+  {% endif %}
+
+</body>
+</html>

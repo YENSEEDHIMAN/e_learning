@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+    <style>
+        /* Global Reset */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        /* Body */
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: #f3f4f6;
+          min-height: 100vh;
+          padding: 0;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: #0056D2;
+            color: white;
+            padding: 15px 43px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+            color : white;
+        }
+        
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        .navbar button {
+            background-color: white;
+            color: #0056D2;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .navbar button:hover {
+            background-color: #e8f5e9;
+        }
+        
+        .logout-button {
+            display: inline-block;
+            background: #f44336;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .logout-button:hover {
+            background: #e53935;
+        }
+        
+        /* Profile Container */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f7f8fa);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: bold;z
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #34495e;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .profile-info {
+            background-color:rgb(246, 248, 248);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info p {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+
+        .profile-info strong {
+            color: #0056D2;
+        }
+
+        .status-pass, .status-fail {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+
+        .status-pass {
+            color: #27ae60;
+        }
+
+        .status-fail {
+            color: #e74c3c;
+        }
+
+        .button-link {
+            display: inline-block;
+            background-color: #0056D2;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 25px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #0047AB;
+        }
+
+        
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 25px 0;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding: 20px;
+                margin: 15px;
+            }
+
+            .container h1 {
+                font-size: 1.6rem;
+            }
+
+            .container h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/courses/">Courses</a>
+      <a href="/quizzes/">Quizzes</a>
+      <a href="/profile/">Profile</a>
+      <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
+  </div>
+
+  <!-- Profile Container -->
+  <div class="container">
+      <h1>Welcome, {{ student.name }}</h1>
+
+      <div class="profile-info">
+          <p><strong>Username:</strong> {{ student.user.username }}</p>
+          <p><strong>Father's Name:</strong> {{ student.father_name }}</p>
+      </div>
+
+      <hr>
+
+      <h2>Course Information</h2>
+
+      {% if student.enrolled_course %}
+          <p><strong>Enrolled Course:</strong> {{ student.enrolled_course.name }}</p>
+          <p><strong>Quiz Completed:</strong> {{ student.has_completed_quiz|yesno:"Yes,No" }}</p>
+          <p><strong>Score:</strong> {{ student.score|floatformat:2 }}%</p>
+
+          {% if student.has_completed_quiz and student.score >= 50 %}
+              <p class="status-pass"><strong>Status:</strong> Passed</p>
+              {% if certificate %}
+                  <a href="{% url 'download_certificate' student.enrolled_course.id %}" class="button-link">Download Certificate</a>
+              {% else %}
+                  <p>Certificate is being generated. Please check back later.</p>
+              {% endif %}
+          {% else %}
+              <p class="status-fail"><strong>Status:</strong> Not Passed</p>
+          {% endif %}
+      {% else %}
+          <p>You are not enrolled in any course yet.</p>
+      {% endif %}
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>SkillEdge Academy</h1>
+    <div>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'about_us' %}">About</a>
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">SignUp</a>
+    </div>
+  </div>
+
+
+  <div class="main-container">
+    <div class="login-container">
+      <h2>User Login</h2>
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.username.label_tag }} {{ form.username }} {{ form.username.errors }}
+        {{ form.password.label_tag }} {{ form.password }} {{ form.password.errors }}
+        <button type="submit">Login</button>
+      </form>
+
+
+      {% if messages %}
+        <div class="success-messages">
+          {% for message in messages %}
+            <p style="color:red; text-align:center;">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if error %}
+        <div class="error-messages">
+          <p style="color:red; text-align:center;">{{ error }}</p>
+        </div>
+      {% endif %}
+
+      <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+      <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course|capfirst }} Quiz - Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #dbeafe, #ffffff);
+            padding: 60px 20px;
+            margin: 0;
+        }
+        .result-box {
+            background: #ffffff;
+            max-width: 600px;
+            margin: auto;
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: 2px solid #0056D2;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .result-box h2 {
+            color: #00338c;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .result-box p {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #444;
+        }
+        .score-highlight {
+            font-size: 24px;
+            color: #0056D2;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .feedback-message {
+            font-size: 17px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            display: inline-block;
+            background: #0056D2;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+        .btn-back:hover {
+            background: #00338c;
+        }
+        .btn-download {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+        .btn-download:hover {
+            background: #388e3c;
+        }
+        .login-again {
+            font-size: 16px;
+            color: #e74c3c;
+            margin-top: 30px;
+        }
+        .login-again a {
+            color: #e74c3c;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .login-again a:hover {
+            color: #c0392b;
+        }
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .result-box {
+                padding: 40px 20px;
+            }
+            .btn-back, .btn-download {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="result-box">
+        <h2>{{ course|capfirst }} Quiz - {{ level|capfirst }} Level</h2>
+
+        <p class="score-highlight">Your Score: {{ score }} / {{ total }}</p>
+   
+        <p class="feedback-message">
+            {% if feedback_message %}
+                {{ feedback_message }}
+            {% else %}
+                Keep going! More practice will lead to success.
+            {% endif %}
+        </p>
+
+        {% if passed %}
+            <a href="{% url 'download_certificate' course.id %}" class="btn-download">
+                Download Certificate
+            </a>
+        {% endif %}
+
+        <a href="{% url 'dashboard' %}" class="btn-back">Back to Dashboard</a>
+
+        <p class="login-again">If you want to continue with another quiz, please <a href="{% url 'logout' %}?next={% url 'login' %}">login again</a>.</p>
+
+    </div>
+
+</body>
+</html>

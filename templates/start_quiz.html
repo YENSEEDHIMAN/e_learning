@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course|capfirst }} Quiz - {{ level|capfirst }} Level</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #ffffff);
+            padding: 30px;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        form {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        .question-block {
+            margin-bottom: 30px;
+        }
+        .question-block p {
+            font-size: 20px;
+            font-weight: 500;
+            color: #34495e;
+        }
+        label {
+            display: block;
+            margin-left: 20px;
+            font-size: 17px;
+            margin-top: 8px;
+            color: #555;
+            cursor: pointer;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background: #0056D2;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #00338c;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        .no-questions {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+        }
+        #timer-box {
+            max-width: 900px;
+            margin: 0 auto 20px auto;
+            text-align: right;
+            font-size: 18px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>{{ course|capfirst }} Quiz - {{ level|capfirst }} Level</h2>
+
+    <div id="timer-box">
+        ⏳ Time Left: <span id="timer">5:00</span>
+    </div>
+
+    {% if questions %}
+    <form method="post" action="{% url 'quiz_submit' course level %}">
+        {% csrf_token %}
+        {% for q in questions %}
+        <div class="question-block">
+            <p><strong>Q{{ forloop.counter }}:</strong> {{ q.question }}</p>
+
+            <label><input type="radio" name="q{{ q.id }}" value="1"> {{ q.option_1 }}</label>
+            <label><input type="radio" name="q{{ q.id }}" value="2"> {{ q.option_2 }}</label>
+            <label><input type="radio" name="q{{ q.id }}" value="3"> {{ q.option_3 }}</label>
+            <label><input type="radio" name="q{{ q.id }}" value="4"> {{ q.option_4 }}</label>
+        </div>
+        <hr>
+        {% endfor %}
+        <button type="submit">Submit Quiz</button>
+    </form>
+    {% else %}
+    <div class="no-questions">
+        <p>No questions available for this quiz yet.</p>
+    </div>
+    {% endif %}
+
+    <script>
+        let timeLeft = 300;
+        const timerDisplay = document.getElementById("timer");
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! Submitting your quiz.");
+                document.querySelector("form").submit();
+            }
+            timeLeft--;
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+
+</body>
+</html>
