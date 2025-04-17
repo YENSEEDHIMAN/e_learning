@@ -184,3 +184,8 @@ elearning.zip
 task_y.py
 weather_data.csv
 weather2.py
+
+
+*.zip
+*.csv
+*.tar.gz
